@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block album %}
+    <center>
+    <h3>Album: {{ album.album_name }}</h3>
+    <h5>Description: {{ album.album_description }}</h5>
+
+    {% for photo in photos %}
+    {% if photo.photo_image %}
+        <p> <img src="{{MEDIA_URL}}{{ photo.photo_image.url}}"></p>
+    {% endif %}
+
+    <h3>{{ photo.photo_name }}</h3>
+    <h3>Added: {{ photo.photo_date }}</h3>
+    <h4>Apploaded by: {{ album.album_user }}</h4>
+    <hr>
+    {% endfor %}
+    {% if username %}
+    </center>
+    <form action="/album/addphoto/{{ album.id }}/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="button" value="Uppload photo">
+    </form>
+    {% endif %}
+{% endblock %}
